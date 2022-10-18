@@ -1,32 +1,37 @@
-const db = require('../db')
-class UserController {
-    async createUser(req, res) {
-        const {name, surname} = req.body
-        console.log(await db.query('SELECT * FROM persons'))
-        const newUser = await db.query('INSERT INTO persons (name, surname) values ($1, $2) RETURNING *' , [name, surname])
-        res.json(newUser.rows[0])
+const db = require("../db");
+
+class UserService {
+    async createUser(user) {
+        const {name, surname} = user
+        const newUser = await db.query('INSERT INTO persons (name, surname) values ($1, $2) RETURNING *',
+            [name, surname]
+        )
+        return newUser;
     }
-    async getUsers(req, res) {
+    async getUsers() {
         const users = await db.query('SELECT * FROM persons')
-        res.json(users.rows)
+        return users.rows;
     }
-    async getOneUser(req, res) {
+    async getOneUser(req) {
         const id = req.params.id
         const user = await db.query('SELECT * FROM persons where id = $1', [id])
-        res.json(user.rows[0])
+        return user;
     }
-    async updateUser(req, res) {
+    async updateUser(req) {
         const {id, name, surname} = req.body
         const user = await db.query('UPDATE persons set name = $1, surname = $2 where id = $3 RETURNING * ',
             [name, surname, id]
         )
-        res.json(user.rows[0])
+        return user;
     }
     async deleteUser(req, res) {
         const id = req.params.id
         const user = await db.query('DELETE FROM persons where id = $1', [id])
         res.json(user.rows[0])
+        return user;
     }
 }
 
-module.exports = new UserController();
+
+
+module.exports = new UserService();

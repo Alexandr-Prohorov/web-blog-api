@@ -1,6 +1,6 @@
 const express = require('express')
-const userRouter = require('./routes/user.routes')
-const postRouter = require('./routes/post.routes')
+const userRouter = require('./Routes/user.routes')
+const postRouter = require('./Routes/post.routes')
 
 const PORT = process.env.PORT || 3000
 
