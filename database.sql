@@ -1,13 +1,13 @@
 
 create TABLE persons(
     id SERIAL UNIQUE,
-    name character varying(50)[],
-    surname character varying(50)[]
+    name character varying(50),
+    surname character varying(50)
 );
 
 create TABLE posts(
     id SERIAL PRIMARY KEY,
-    user_id SERIAL INTEGER,
+    user_id INTEGER,
     title VARCHAR(255),
     description VARCHAR(255),
     created_at DATE,
