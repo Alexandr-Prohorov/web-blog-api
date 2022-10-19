@@ -1,9 +1,9 @@
 const db = require("../db");
 
 class PostService {
-    async createPost(user) {
-        const {user_id, title, description} = user
-        const newPost = await db.query('INSERT INTO posts (user_id, title, description) values ($1, $2) RETURNING *',
+    async createPost(post) {
+        const {user_id, title, description} = post
+        const newPost = await db.query('INSERT INTO posts (user_id, title, description) values ($1, $2, $3) RETURNING *',
             [user_id, title, description]
         )
         return newPost;
@@ -17,9 +17,10 @@ class PostService {
         const post = await db.query('SELECT * FROM posts where id = $1', [id])
         return post;
     }
-    async updatePost(req) {
+    async updatePost(req, res) {
         const {id, user_id, title, description} = req.body
-        const post = await db.query('UPDATE posts set user_id = $1, title = $2, description = $3 where id = $4 RETURNING * ',
+        const post = await db.query(
+            'UPDATE posts set user_id = $1, title = $2, description = $3 where id = $4 RETURNING * ',
             [id, user_id, title, description]
         )
         return post;
