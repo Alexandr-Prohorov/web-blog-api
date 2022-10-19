@@ -27,7 +27,6 @@ class UserService {
     async deleteUser(req, res) {
         const id = req.params.id
         const user = await db.query('DELETE FROM persons where id = $1', [id])
-        res.json(user.rows[0])
         return user;
     }
 }

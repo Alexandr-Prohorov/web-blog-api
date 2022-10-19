@@ -1,33 +1,46 @@
 const db = require('../db')
+const PostService = require("../Service/post.service");
+
 class PostController {
     async createPost(req, res) {
-        const {user_id, title, description} = req.body
-        const newPost = await db.query(
-            'INSERT INTO posts (user_id, title, description) values ($1, $2, $3) RETURNING *' , [user_id, title, description]
-        )
-        res.json(newPost.rows[0])
+        try {
+            const post = await PostService.createPost(req.body)
+            res.json(post.rows[0])
+        } catch (e) {
+            res.status(500).json(e)
+        }
     }
     async getPosts(req, res) {
-        const users = await db.query('SELECT * FROM persons')
-        console.log(users)
-        res.json(users.rows)
+        try {
+            const posts = await PostService.getPosts(req)
+            res.json(posts)
+        } catch (e) {
+            res.status(500).json(e)
+        }
     }
     async getOnePost(req, res) {
-        const id = req.params.id
-        const user = await db.query('SELECT * FROM persons where id = $1', [id])
-        res.json(user.rows[0])
+        try {
+            const post = await PostService.getOnePost(req, res)
+            res.json(post.rows[0])
+        } catch (e) {
+            res.status(500).json(e)
+        }
     }
     async updatePost(req, res) {
-        const {id, name, surname} = req.body
-        const user = await db.query('UPDATE persons set name = $1, surname = $2 where id = $3 RETURNING * ',
-            [name, surname, id]
-        )
-        res.json(user.rows[0])
+        try {
+            const post = await PostService.updatePost(req, res);
+            res.json(post.rows[0])
+        } catch (e) {
+            res.status(500).json(e)
+        }
     }
     async deletePost(req, res) {
-        const id = req.params.id
-        const user = await db.query('DELETE FROM persons where id = $1', [id])
-        res.json(user.rows[0])
+        try {
+            const post = await PostService.deletePost(req, res)
+            res.json(post.rows[0])
+        } catch (e) {
+            res.status(500).json(e)
+        }
     }
 }
 
