@@ -1,15 +1,19 @@
 const db = require("../db");
+const User = require("../Models/User")
 
 class UserService {
     async createUser(user) {
         const {name, surname} = user
-        const newUser = await db.query('INSERT INTO persons (name, surname) values ($1, $2) RETURNING *',
-            [name, surname]
-        )
+        // const newUser = await db.query('INSERT INTO persons (name, surname) values ($1, $2) RETURNING *',
+        //     [name, surname]
+        // )
+        const newUser = await User.create({ name: name, surname: surname })
+        console.log(newUser.toJSON())
+        console.log(JSON.stringify(newUser, null, 2))
         return newUser;
     }
     async getUsers() {
-        const users = await db.query('SELECT * FROM persons')
+        const users = await new User.findAll()
         return users.rows;
     }
     async getOneUser(req) {
