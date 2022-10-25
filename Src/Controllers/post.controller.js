@@ -1,4 +1,4 @@
-const db = require('../db')
+const db = require('../../db')
 const PostService = require("../Service/post.service");
 
 class PostController {

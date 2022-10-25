@@ -32,6 +32,10 @@ console.log(User === sequelize.models.User) // true
     // Пересоздаем таблицу в БД
     await sequelize.sync({ force: true })
     // дальнейший код
+
+    const jane = await User.create({ name: "Jane", surname: "Doe" });
+    console.log("Jane's auto-generated ID:", jane.id);
+
 })()
 
 module.exports = User

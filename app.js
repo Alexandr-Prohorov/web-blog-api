@@ -1,6 +1,6 @@
 const express = require('express')
-const userRouter = require('./Routes/user.routes')
-const postRouter = require('./Routes/post.routes')
+const userRouter = require('./Src/Routes/user.routes')
+const postRouter = require('./Src/Routes/post.routes')
 const { Sequelize } = require('sequelize');
 
 const PORT = process.env.PORT || 3000
